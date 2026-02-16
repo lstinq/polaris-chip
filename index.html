@@ -23,24 +23,129 @@
       --my-card-title-background-color: yellow;
       --my-card-title-color: navy
     }
+    my-card[fancy] {
+      --my-card-title-background-color: blue;
+    }
+    .controls button {
+      color: black;
+      font-size: 24px;
+      display: inline-block;
+      padding: 8px;
+      margin: 16px;
+      background-color: white;
+    }
   </style>
   <title>polaris-chip / my-card</title>
 </head>
 
 <body>
   <h1>polaris-chip</h1>
-  <!-- this is going to do whatever the tag's defaults are -->
   <polaris-chip title="News of Record" link="https://psu.edu/"></polaris-chip>
   <polaris-chip title="Faculty and Staff"></polaris-chip>
   <polaris-chip title="Sports are the only thing that matter"></polaris-chip>
   <polaris-chip title="Grants and donations"></polaris-chip>
 
   <h1>my-card</h1>
-  <my-card></my-card>
 
-  <!-- this is what is bringing in the definition for this tag -->
+  <!-- Added a container for cards -->
+  <div id="cardlist">
+    <my-card
+        title="Lilac"
+        image="https://www.chicagobotanic.org/sites/default/files/2024/03/22/lillac_1400x787.jpg"
+        alt="Lilac flowers"
+      >
+        <p>Lilac symbolizes innocence and spring.</p>
+    </my-card>
+
+    <my-card
+        title="Jasmine"
+        image="https://5.imimg.com/data5/XH/YR/MY-5816306/jasmine-flower.jpg"
+        alt="Jasmine flower"
+      >
+        <p>Jasmine symbolizes purity, love, and beauty.</p>
+    </my-card>
+
+    <my-card
+        title="Tulip"
+        image="https://www.americanmeadows.com/cdn/shop/files/visi23407_dawrin_tulip_tequila_sunrise_dt.jpg"
+        alt="Tulip flower"
+      >
+        <p>Tulips symbolize deep love and new beginnings.</p>
+    </my-card>
+
+    <my-card
+        title="Lily of the Valley"
+        image="https://hips.hearstapps.com/hmg-prod/images/lily-of-the-valley-convallaria-majalis-1663608154.jpg"
+        alt="Lily of the Valley"
+      >
+        <p>Lily of the Valley symbolizes happiness and purity.</p>
+    </my-card>
+
+    <my-card
+        title="Hydrangea"
+        image="https://www.coldstreamfarm.net/wp-content/uploads/2023/07/hydrangea-blue-flowers-iStock-147010540.jpg"
+        alt="Hydrangea flower"
+      >
+        <p>Hydrangeas symbolize gratitude and heartfelt emotion.</p>
+    </my-card>
+  </div>
+
+  <div class="controls">
+    <button class="duplicate">Clone card</button>
+    <button class="title">Change title</button>
+    <button class="img-change">Change image</button>
+    <button id="bg-change">Change background</button>
+    <button id="delete">Delete card</button>
+  </div>
+
+  <!-- Component definitions -->
   <script type="module" src="./src/polaris-chip.js"></script>
   <script type="module" src="./src/my-card.js"></script>
+
+  <!-- Control buttons logic -->
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const MAX_CARDS = 10;
+
+      // Clone card
+      document.querySelector('.duplicate').addEventListener('click', () => {
+        const cards = document.querySelectorAll('#cardlist my-card');
+        if (cards.length >= MAX_CARDS) return;
+
+        const newCard = cards[0].cloneNode(true);
+        document.querySelector('#cardlist').appendChild(newCard);
+      });
+
+      // Change title
+      document.querySelector('.title').addEventListener('click', () => {
+        document.querySelectorAll('#cardlist my-card').forEach(card => {
+          card.title = "The card title was changed...";
+        });
+      });
+
+      // Change image
+      document.querySelector('.img-change').addEventListener('click', () => {
+        document.querySelectorAll('#cardlist my-card').forEach(card => {
+          card.image = "https://www.floraly.com.au/cdn/shop/articles/florigoraphy_blog_banner.png?v=1668756877";
+        });
+      });
+
+      // Toggle background
+      document.querySelector('#bg-change').addEventListener('click', () => {
+        document.querySelectorAll('#cardlist my-card').forEach(card => {
+          card.fancy = !card.fancy;
+        });
+      });
+
+      // Delete card
+      document.querySelector('#delete').addEventListener('click', () => {
+        const cards = document.querySelectorAll('#cardlist my-card');
+        if (cards.length <= 1) return;
+        cards[cards.length - 1].remove();
+      });
+    });
+  </script>
+
 </body>
 
 </html>

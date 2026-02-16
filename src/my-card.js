@@ -100,10 +100,12 @@ export class MyCard extends LitElement {
   render() {
   return html`
       <div class="card">
-        <img class="card-image"
-            src="${this.image}"
-            alt="${this.alt}"
-        />
+        <meme-maker
+        alt="${this.alt} is a meme"
+        image-url="${this.image}"
+        bottom-text="HTML is anything"
+        top-text="HAX is html">
+        </meme-maker>
         <h2 class="card-title">
           ${this.title}
         </h2>
